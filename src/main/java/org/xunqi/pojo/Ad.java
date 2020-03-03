@@ -2,13 +2,14 @@ package org.xunqi.pojo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import org.xunqi.bean.BaseBean;
 
 /**
  * @author Jerry
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-public class Ad {
+public class Ad extends BaseBean {
 
 
     /** id */

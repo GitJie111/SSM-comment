@@ -1,5 +1,7 @@
 package org.xunqi.service.impl;
+import	java.util.ArrayList;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.xunqi.dto.AdDto;
@@ -10,6 +12,7 @@ import org.xunqi.service.AdService;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Jerry
@@ -24,6 +27,7 @@ public class AdServiceImpl implements AdService {
     private String adImageSavePath;
 
     @Override
+    //TODO 可以改成获取失败
     public boolean add(AdDto adDto) {
         Ad ad = new Ad();
         ad.setTitle(adDto.getTitle());
@@ -48,5 +52,21 @@ public class AdServiceImpl implements AdService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public List<AdDto> searchByPage(AdDto adDto) {
+
+        List<AdDto> result = new ArrayList <AdDto>();
+        Ad condition = new Ad();
+        BeanUtils.copyProperties(adDto,condition);
+        List<Ad> adList = adMapper.selectByPage(condition);
+
+        for (Ad ad : adList) {
+            AdDto adDtoTemp = new AdDto();
+            result.add(adDtoTemp);
+            BeanUtils.copyProperties(ad,adDtoTemp);
+        }
+        return result;
     }
 }

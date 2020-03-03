@@ -2,6 +2,8 @@ package org.xunqi.service;
 
 import org.xunqi.dto.AdDto;
 
+import java.util.List;
+
 /**
  * @author Jerry
  */
@@ -14,4 +16,10 @@ public interface AdService {
      */
     boolean add(AdDto adDto);
 
+    /**
+     *  搜索查询
+     * @param adDto
+     * @return
+     */
+    List<AdDto> searchByPage(AdDto adDto);
 }
