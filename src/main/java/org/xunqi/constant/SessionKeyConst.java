@@ -2,6 +2,7 @@ package org.xunqi.constant;
 
 /**
  * 存放在Session中各种信息的Key值定义
+ * @author Jerry
  */
 public class SessionKeyConst {
 	/**

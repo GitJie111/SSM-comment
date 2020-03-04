@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"/>
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="${basePath}/css/all.css"/>
-		<link rel="stylesheet" type="text/css" href="${basePath}/css/pop.css"/>
+		<link rel="stylesheet" type="text/css" href="${basePath}/css/pop.Fcss"/>
 		<link rel="stylesheet" type="text/css" href="${basePath}/css/main.css"/>
 		<link rel="stylesheet" type="text/css" href="${basePath}/css/jquery.validate.css"/>
 		<script type="text/javascript" src="${basePath}/js/common/jquery-1.8.3.js"></script>
@@ -30,12 +30,12 @@
 							<td width="30%">
 								<input id="title" name="title" value="${modifyObj.title}" class="allInput" style="width:100%;" type="text"/>
 							</td>
-							<td align="right" width="10%">上传图片：</td>
-							<td width="30%">
-								<a href="${modifyObj.img}">查看图片</a>
-								<input type="hidden" name="img" value="${modifyObj.img}"/>
-								<input id="imgFile" name="imgFile" class="allInput" style="width:100%;" type="file"/>
-							</td>
+								<td align="right" width="10%">上传图片：</td>
+								<td width="30%">
+									<a href="${modifyObj.img}">查看图片</a>
+									<input type="hidden" name="img" value="${modifyObj.img}"/>
+									<input id="imgFile" name="imgFile" class="allInput" style="width:100%;" type="file"/>
+								</td>
 						</tr>
 						<tr>
 							<td align="right" width="10%">链接地址<font color="red">*</font>：</td>

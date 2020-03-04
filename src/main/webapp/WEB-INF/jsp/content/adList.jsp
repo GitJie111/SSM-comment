@@ -10,6 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="${basePath}/css/all.css"/>
 		<link rel="stylesheet" type="text/css" href="${basePath}/css/pop.css"/>
 		<link rel="stylesheet" type="text/css" href="${basePath}/css/main.css"/>
+		<link rel="stylesheet" type="text/css" href="${basePath}/css/jquery.validate.css"/>
 		<script type="text/javascript" src="${basePath}/js/common/jquery-1.8.3.js"></script>
 		<script type="text/javascript" src="${basePath}/js/common/common.js"></script>
 		<script type="text/javascript" src="${basePath}/js/content/adList.js"></script>
@@ -33,9 +34,10 @@
 								</td>
 	                            <td style="text-align: right;" width="150">
 	                            	<input class="tabSub" value="查询" onclick="search('1');" type="button"/>&nbsp;&nbsp;&nbsp;&nbsp;
-	                            	<t:auth url="/ad/addInit">
+	                            	<%--<t:auth url="/ad/addInit">
 	                            		<input class="tabSub" value="添加" onclick="location.href='${basePath}/ad/addInit'" type="button"/>
-	                            	</t:auth>
+	                            	</t:auth>--%>
+									<input class="tabSub" value="添加" onclick="location.href='${basePath}/ad/addInit'" type="button"/>
 	                            </td>
 	       					</tr>
 						</tbody>
@@ -55,12 +57,14 @@
 										<td>${item.title}</td>
 										<td>${item.link}</td>
 										<td>
-											<t:auth url="/ad/modifyInit">
-												<a href="javascript:void(0);" onclick="modifyInit('${item.id}')">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;
-											</t:auth>
-											<t:auth url="/ad/remove">
-												<a href="javascript:void(0);" onclick="remove('${item.id}')">删除</a>
-											</t:auth>
+											<a href="javascript:void(0);" onclick="modifyInit('${item.id}')">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<%--											<t:auth url="/ad/modifyInit">--%>
+<%--												<a href="javascript:void(0);" onclick="modifyInit('${item.id}')">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;--%>
+<%--											</t:auth>--%>
+<%--											<t:auth url="/ad/remove">--%>
+<%--												<a href="javascript:void(0);" onclick="remove('${item.id}')">删除</a>--%>
+<%--											</t:auth>--%>
+											<a href="javascript:void(0);" onclick="remove('${item.id}')">删除</a>
 										</td>
 									</tr>
 								</c:forEach>

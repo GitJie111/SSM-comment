@@ -8,6 +8,8 @@
 		<link rel="stylesheet" type="text/css" href="${basePath}/css/pop.css"/>
 		<link rel="stylesheet" type="text/css" href="${basePath}/css/main.css"/>
 		<script type="text/javascript" src="${basePath}/js/common/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="${basePath}/js/common/validation/jquery.validate.js"></script>
+		<script type="text/javascript" src="${basePath}/js/common/validation/messages_zh.js"></script>
 		<script type="text/javascript" src="${basePath}/js/common/common.js"></script>
 		<script type="text/javascript" src="${basePath}/js/content/adAdd.js"></script>
 	</head>

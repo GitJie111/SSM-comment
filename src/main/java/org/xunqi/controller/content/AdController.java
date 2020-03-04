@@ -3,6 +3,8 @@ package org.xunqi.controller.content;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.xunqi.dto.AdDto;
 import org.xunqi.enums.PageCodeEnum;
 import org.xunqi.service.AdService;
@@ -33,6 +35,17 @@ public class AdController {
         return "/content/adList";
     }
 
+
+    @RequestMapping("/remove")
+    public String remove(@RequestParam("id") Long id,Model model) {
+        if(adService.delete(id)) {
+            model.addAttribute(PageCodeEnum.KEY, PageCodeEnum.REMOVE_SUCCESS);
+        } else {
+            model.addAttribute(PageCodeEnum.KEY, PageCodeEnum.REMOVE_FAIL);
+        }
+        return "forward:/ad";
+    }
+
     /**
      * 新增页初始化
      */
@@ -61,7 +74,38 @@ public class AdController {
         } else {
             model.addAttribute(PageCodeEnum.KEY, PageCodeEnum.ADD_FAIL);
         }
-        return "/content/adAdd";
+        return "forward:/ad";
+    }
+
+
+    /**
+     *  修改页面初始化
+     * @return
+     */
+    @RequestMapping("/modifyInit")
+    public String modifyInit(Model model,@RequestParam("id")Long id) {
+        AdDto adDto = adService.selectById(id);
+        model.addAttribute("modifyObj",adDto);
+        return "/content/adModify";
+    }
+
+
+    /**
+     *  修改信息
+     * @param model
+     * @param adDto
+     * @return
+     */
+    @RequestMapping(value = "/modify")
+    public String modify(Model model,AdDto adDto) {
+        model.addAttribute("modifyObj",adDto);
+
+        if (adService.update(adDto)) {
+            model.addAttribute(PageCodeEnum.KEY, PageCodeEnum.MODIFY_SUCCESS);
+        } else {
+            model.addAttribute(PageCodeEnum.KEY, PageCodeEnum.MODIFY_SUCCESS);
+        }
+        return "forward:/ad";
     }
 
 

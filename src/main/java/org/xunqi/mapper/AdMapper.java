@@ -1,5 +1,6 @@
 package org.xunqi.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.xunqi.pojo.Ad;
 
 import java.util.List;
@@ -22,4 +23,28 @@ public interface AdMapper {
      * @return
      */
     List<Ad> selectByPage(Ad condition);
+
+
+    /**
+     *  根据主键修改
+     * @param ad 待修改的广告对象
+     * @return
+     */
+    int update(Ad ad);
+
+
+    /**
+     *  查询单条广告信息
+     * @param id
+     * @return
+     */
+    Ad selectById(@Param("id") Long id);
+
+
+    /**
+     *  删除广告信息
+     * @param id
+     * @return
+     */
+    int deleteAd(@Param("id") Long id);
 }
