@@ -7,7 +7,7 @@
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
 	
-<!--	<plugins>-->
-<!--		<plugin interceptor="org.xunqi.dao.interceptor.PageInterceptor"/>-->
-<!--	</plugins>-->
+	<plugins>
+		<plugin interceptor="org.xunqi.mapper.interceptor.PageInterceptor"/>
+	</plugins>
 </configuration>

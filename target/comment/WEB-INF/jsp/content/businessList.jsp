@@ -55,15 +55,17 @@
 										<td>${s.index + 1}</td>
 										<td>${item.title}</td>
 										<td>${item.subtitle}</td>
-										<td>${item.cityDic.name}</td>
-										<td>${item.categoryDic.name}</td>
+										<td>${item.city}</td>
+										<td>${item.category}</td>
 										<td>
-											<t:auth url="/businesses/${item.id}" method="PUT">
+											<%--<t:auth url="/businesses/${item.id}" method="PUT">
 												<a href="javascript:void(0);" onclick="modifyInit('${item.id}')">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;
-											</t:auth>
-											<t:auth url="/businesses/${item.id}" method="DELETE">
+											</t:auth>--%>
+												<a href="javascript:void(0);" onclick="modifyInit('${item.id}')">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;
+											<%--<t:auth url="/businesses/${item.id}" method="DELETE">
 												<a href="javascript:void(0);" onclick="remove('${item.id}')">删除</a>
-											</t:auth>
+											</t:auth>--%>
+												<a href="javascript:void(0);" onclick="remove('${item.id}')">删除</a>
 										</td>
 									</tr>
 								</c:forEach>

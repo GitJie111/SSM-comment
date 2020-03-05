@@ -41,6 +41,7 @@
                 weight = #{weight},
             </if>
         </set>
+        where id=#{id}
     </update>
 
     <delete id="deleteAd" parameterType="long">

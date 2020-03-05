@@ -114,7 +114,9 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public boolean delete(Long id) {
+        Ad ad = adMapper.selectById(id);
         int result = adMapper.deleteAd(id);
+        FileUtil.delete(adImageSavePath + ad.getImgFileName());
         if (result > 0) {
             return true;
         } else {
