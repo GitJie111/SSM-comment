@@ -40,7 +40,7 @@ public interface BusinessService {
      * @param businessDto   businessDto 查询条件(包含分页对象)
      * @return
      */
-    BusinessListDto searchPageForApi(BusinessDto businessDto);
+    BusinessListDto searchByPageForApi(BusinessDto businessDto);
 
 
     /**

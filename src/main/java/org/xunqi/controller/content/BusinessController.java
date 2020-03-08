@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.xunqi.constant.DicTypeConst;
 import org.xunqi.dto.BusinessDto;
@@ -35,7 +36,7 @@ public class BusinessController {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String search(BusinessDto dto, Model model) {
+    public String search(BusinessDto dto, Model model){
         List<BusinessDto> list = businessService.searchByPage(dto);
         model.addAttribute("list",list);
         model.addAttribute("searchParam",dto);
@@ -110,7 +111,6 @@ public class BusinessController {
         } else {
             model.addAttribute(PageCodeEnum.KEY, PageCodeEnum.MODIFY_FAIL);
         }
-
         return "/content/businessModify";
     }
 

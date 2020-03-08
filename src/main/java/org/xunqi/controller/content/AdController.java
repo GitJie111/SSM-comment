@@ -107,6 +107,4 @@ public class AdController {
         }
         return "forward:/ad";
     }
-
-
 }

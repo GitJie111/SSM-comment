@@ -4,11 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.xunqi.bean.Page;
+import org.xunqi.constant.CategoryConst;
 import org.xunqi.dto.BusinessDto;
 import org.xunqi.dto.BusinessListDto;
 import org.xunqi.mapper.BusinessMapper;
 import org.xunqi.pojo.Business;
 import org.xunqi.service.BusinessService;
+import org.xunqi.util.CommonUtil;
 import org.xunqi.util.FileUtil;
 
 import javax.annotation.Resource;
@@ -106,8 +109,46 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public BusinessListDto searchPageForApi(BusinessDto businessDto) {
-        return null;
+    public BusinessListDto searchByPageForApi(BusinessDto businessDto) {
+
+        BusinessListDto result = new BusinessListDto();
+
+        //组织查询条件
+        Business businessForSelect = new Business();
+        BeanUtils.copyProperties(businessDto,businessForSelect);
+
+        //当关键字不为空时，把关键字的值分别设置到标题、副标题、描述中
+        if (CommonUtil.isEmpty(businessDto.getKeyword())) {
+            businessForSelect.setTitle(businessDto.getKeyword());
+            businessForSelect.setSubtitle(businessDto.getKeyword());
+            businessForSelect.setDesc(businessDto.getKeyword());
+        }
+        //当类别为全部(all)时，需要将类别清空，不作为过滤条件
+        if (businessDto.getCategory() != null && CategoryConst.ALL.equals(businessDto.getCategory())) {
+            businessForSelect.setCategory(null);
+        }
+        //前端app页码从0开始计算，这里需要+1
+        int currentPage = businessForSelect.getPage().getCurrentPage();
+        businessForSelect.getPage().setCurrentPage(currentPage + 1);
+
+        List<Business> list =  businessMapper.selectLikeByPage(businessForSelect);
+
+        //经过查询后根据page对象设置hasMore
+        Page page = businessForSelect.getPage();
+        result.setHasMore(page.getCurrentPage() < page.getTotalNumber());
+
+        //对查询出的结果进行格式化
+        for (Business business : list) {
+            BusinessDto businessDtoTemp = new BusinessDto();
+            result.getData().add(businessDtoTemp);
+            BeanUtils.copyProperties(business,businessDtoTemp);
+            businessDtoTemp.setImg(url + business.getImgFileName());
+            // 为兼容前端mumber这个属性
+            businessDtoTemp.setNumber(business.getNumber());
+            businessDtoTemp.setStar(this.getStar(business));
+        }
+
+        return result;
     }
 
     @Override

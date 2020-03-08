@@ -55,8 +55,8 @@
 										<td>${s.index + 1}</td>
 										<td>${item.title}</td>
 										<td>${item.subtitle}</td>
-										<td>${item.city}</td>
-										<td>${item.category}</td>
+										<td>${item.cityDic.name}</td>
+										<td>${item.categoryDic.name}</td>
 										<td>
 											<%--<t:auth url="/businesses/${item.id}" method="PUT">
 												<a href="javascript:void(0);" onclick="modifyInit('${item.id}')">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;
