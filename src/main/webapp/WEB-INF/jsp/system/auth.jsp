@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE" />
-        <title>权限维护</title>
+
         <link href="${basePath}/css/all.css" rel="stylesheet" type="text/css" />
         <link href="${basePath}/css/pop.css" rel="stylesheet" type="text/css" />
         <link href="${basePath}/css/zTreeStyle/zTreeStyle.css" type="text/css" rel="stylesheet" />
@@ -12,7 +12,7 @@
         <link href="${basePath}/css/rmenu.css" type="text/css" rel="stylesheet" />
         <script src="${basePath}/js/common/jquery-1.8.3.js" type="text/javascript"></script>
         <script src="${basePath }/js/common/jquery.ztree.all.js" type="text/javascript"></script>
-        <script src="${basePath}/js/common/validation/jquery.validate.js" type="text/javascript"></script>
+        <script src="${basePath}/js/common/validation/jquery.validate.js" t<title>权限维护</title>ype="text/javascript"></script>
 		<script src="${basePath}/js/common/validation/messages_zh.js" type="text/javascript"></script>
         <script src="${basePath}/js/common/common.js" type="text/javascript"></script>
         <script src="${basePath}/js/system/auth.js" type="text/javascript"></script>
