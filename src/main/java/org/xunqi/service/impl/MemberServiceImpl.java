@@ -65,8 +65,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Long getPhone(String token) {
         TokenCache tokenCache = TokenCache.getInstance();
-        tokenCache.getPhone(token);
-        return null;
+        return tokenCache.getPhone(token);
     }
 
     @Override

@@ -10,12 +10,12 @@ import org.xunqi.pojo.Business;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BusinessDto extends Business {
+public class BusinessDto extends Business{
 
     private String img;
     private MultipartFile imgFile;
     private String keyword;
-    private Integer number;
+    private Integer mumber;
     private Integer star;
 
 }

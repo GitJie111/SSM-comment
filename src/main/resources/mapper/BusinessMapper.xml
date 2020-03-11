@@ -70,8 +70,8 @@
     </select>
 
 
-    <select id="selectLikeByPage" resultMap="BusinessResultMap">
-        select id, img_file_name, title, subtitle, price, distance, number, `desc`, city, category, star_total_num, comment_total_num
+    <select id="selectLikeByPage" resultType="Business">
+        select id,img_file_name,title,subtitle,price,distance,number,`desc`,city,category,star_total_num,comment_total_num
         from business
         <where>
             <if test="title != null and title != ''
@@ -101,6 +101,11 @@
 
         set b.star_total_num = b.star_total_num + t.star_num,b.comment_total_num = b.comment_total_num + t.comment_num
         where b.id=t.business_id
+    </update>
+
+    <update id="updateNumber">
+        update business b,(select business_id,count(*) cou from orders group by business_id) c
+        set b.number=b.number + c.cou where b.id=c.business_id
     </update>
 
 

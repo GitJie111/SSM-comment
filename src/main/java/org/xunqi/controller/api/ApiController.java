@@ -3,6 +3,7 @@ package org.xunqi.controller.api;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.xunqi.bean.Page;
+import org.xunqi.constant.CommentStateConst;
 import org.xunqi.dto.*;
 import org.xunqi.enums.ApiCodeEnum;
 import org.xunqi.service.*;
@@ -59,7 +60,7 @@ public class ApiController {
      * 首页 —— 推荐列表（猜你喜欢）
      */
     @RequestMapping(value = "/homelist/{city}/{page.currentPage}", method = RequestMethod.GET)
-    public BusinessListDto homeList(BusinessDto businessDto) {
+    public BusinessListDto homelist(BusinessDto businessDto) {
         businessDto.getPage().setPageNumber(businessHomeNumber);
         return businessService.searchByPageForApi(businessDto);
     }
@@ -116,6 +117,36 @@ public class ApiController {
 
 
     /**
+     *  提交评论
+     */
+    @RequestMapping(value = "/submitComment", method = RequestMethod.POST)
+    public ApiCodeDto submitComment(CommentForSubmitDto dto) {
+        ApiCodeDto result;
+        //1、效验登录信息：token、手机号
+        Long phone = memberService.getPhone(dto.getToken());
+
+        if (phone != null) {
+            //2、根据手机号取出会员id
+            Long memberId = memberService.getIdByPhone(phone);
+            //3、根据提交上来的订单ID获取对应的会员ID，效验与当前登录的会员是否一致
+            OrdersDto ordersDto = ordersService.selectById(dto.getId());
+            if (ordersDto.getMemberId().equals(memberId)) {
+                //4、保存评论
+                commentService.add(dto);
+                result = new ApiCodeDto(ApiCodeEnum.SUCCESS);
+            } else {
+                result = new ApiCodeDto(ApiCodeEnum.NO_AUTH);
+            }
+        } else {
+            result = new ApiCodeDto(ApiCodeEnum.NOT_LOGGED);
+        }
+        return result;
+    }
+
+
+
+
+    /**
      *  根据手机号下发送短信验证码
      */
     @RequestMapping(value = "/sms",method = RequestMethod.POST)
@@ -169,6 +200,32 @@ public class ApiController {
             }
         } else {
             dto = new ApiCodeDto(ApiCodeEnum.CODE_INVALID);
+        }
+        return dto;
+    }
+
+
+    /**
+     *  买单
+     */
+    @RequestMapping(value = "/order", method = RequestMethod.POST)
+    public ApiCodeDto order(OrderForBuyDto orderForBuyDto) {
+        ApiCodeDto dto;
+        // 1、校验token是否有效（缓存中是否存在这样一个token，并且对应存放的会员信息（这里指的是手机号）与提交上来的信息一致）
+        Long phone = memberService.getPhone(orderForBuyDto.getToken());
+        if (phone != null) {
+            // 2、根据手机号获取会员主键
+            Long memberId = memberService.getIdByPhone(phone);
+            // 3、保存订单
+            OrdersDto ordersDto = new OrdersDto();
+            ordersDto.setNum(orderForBuyDto.getNum());
+            ordersDto.setPrice(orderForBuyDto.getPrice());
+            ordersDto.setBusinessId(orderForBuyDto.getId());
+            ordersDto.setMemberId(memberId);
+            ordersService.add(ordersDto);
+            dto = new ApiCodeDto(ApiCodeEnum.SUCCESS);
+        } else {
+            dto = new ApiCodeDto(ApiCodeEnum.NOT_LOGGED);
         }
         return dto;
     }

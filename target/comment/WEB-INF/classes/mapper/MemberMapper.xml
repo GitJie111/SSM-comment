@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.xunqi.mapper.MemberMapper">
+
+    <select id="select" resultType="org.xunqi.pojo.Member">
+
+        select id, phone, name, password
+        from member
+        <where>
+            <if test="phone != null and phone != ''">
+                phone = #{phone}
+            </if>
+        </where>
+        order by phone;
+    </select>
+</mapper>

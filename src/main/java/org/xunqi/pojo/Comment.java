@@ -20,7 +20,7 @@ public class Comment extends BaseBean {
 
     private int star;
 
-    private Long orderId;
+    private Long ordersId;
 
     private Date createTime;
 

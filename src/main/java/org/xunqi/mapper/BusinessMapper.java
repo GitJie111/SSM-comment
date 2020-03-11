@@ -56,6 +56,13 @@ public interface BusinessMapper {
 
 
     /**
+     *  更新数量
+     * @return
+     */
+    int updateNumber();
+
+
+    /**
      *  根据主键删除用户信息
      * @param id
      * @return

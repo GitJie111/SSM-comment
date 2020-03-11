@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.xunqi.mapper.SysParamMapper">
+
+    <select id="selectByKey" resultType="org.xunqi.bean.SysParam">
+        select param_key, param_value, param_desc
+        from sys_param
+        where param_key = #{key}
+    </select>
+
+
+    <update id="updateKey">
+        update sys_param set param_value=#{paramValue} where param_key = #{paramKey}
+    </update>
+</mapper>

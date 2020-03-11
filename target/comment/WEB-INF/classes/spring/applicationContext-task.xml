@@ -5,13 +5,13 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
-<!--	-->
-<!--	&lt;!&ndash; 扫描task包 &ndash;&gt;-->
-<!--	<context:component-scan base-package="org.xunqi.task"/>-->
-<!--	-->
-<!--	&lt;!&ndash; 启用定时任务 &ndash;&gt;-->
-<!--	<task:scheduled-tasks>-->
-<!--		<task:scheduled ref="BusinessTask" method="synNumber" cron="10 */5 * * * ?"/>-->
-<!--		<task:scheduled ref="BusinessTask" method="synStar" cron="0 */5 * * * ?"/>-->
-<!--	</task:scheduled-tasks>-->
+
+	<!-- 扫描task包 -->
+	<context:component-scan base-package="org.xunqi.task"/>
+
+	<!-- 启用定时任务 -->
+	<task:scheduled-tasks>
+		<task:scheduled ref="BusinessTask" method="synNumber" cron="10 */5 * * * ?"/>
+		<task:scheduled ref="BusinessTask" method="synStar" cron="0 */5 * * * ?"/>
+	</task:scheduled-tasks>
 </beans>

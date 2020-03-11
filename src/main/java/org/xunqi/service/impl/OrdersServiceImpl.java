@@ -31,7 +31,11 @@ public class OrdersServiceImpl implements OrdersService {
         Orders orders = new Orders();
         BeanUtils.copyProperties(ordersDto,orders);
         orders.setCommentState(CommentStateConst.NOT_COMMENT);
-        return ordersMapper.insert(orders) > 0;
+        int result = ordersMapper.insert(orders);
+        if (result > 0) {
+            return true;
+        }
+        return false;
     }
 
     @Override

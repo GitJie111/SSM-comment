@@ -39,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = new Comment();
         BeanUtils.copyProperties(commentForSubmitDto,comment);
         comment.setId(null);
-        comment.setOrderId(commentForSubmitDto.getId());
+        comment.setOrdersId(commentForSubmitDto.getId());
         comment.setCreateTime(new Date());
 
         //保存评论
@@ -50,7 +50,7 @@ public class CommentServiceImpl implements CommentService {
 
         //更新订单评论状态
         ordersMapper.update(orders);
-        return false;
+        return true;
     }
 
     @Override
