@@ -101,7 +101,8 @@ public class ApiController {
      */
     @RequestMapping(value = "/detail/comment/{currentPage}/{businessId}", method = RequestMethod.GET)
     public CommentListDto detail(@PathVariable("businessId") Long businessId, Page page) {
-        return commentService.getListByBusinessId(businessId,page);
+        CommentListDto commentListDto = commentService.getListByBusinessId(businessId,page);
+        return commentListDto;
     }
 
 
@@ -142,7 +143,6 @@ public class ApiController {
         }
         return result;
     }
-
 
 
 

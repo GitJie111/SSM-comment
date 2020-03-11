@@ -78,7 +78,7 @@ public class CommentServiceImpl implements CommentService {
 
         //组织返回值
         List<CommentDto> commentDtoList = new ArrayList<>();
-        commentListDto.setCommentDtoList(commentDtoList);
+        commentListDto.setData(commentDtoList);
 
         for (Comment commentTemp : commentList) {
             CommentDto commentDto = new CommentDto();
