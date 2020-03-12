@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.xunqi.mapper.GroupMapper">
+    
+    <resultMap id="GroupResultMap" type="Group">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+
+        <collection property="menuList" javaType="list" ofType="Menu">
+            <result column="menu_id" property="id"/>
+            <result column="menu_name" property="name"/>
+            <result column="url" property="url"/>
+            <result column="parent_id" property="parentId"/>
+            <result column="order_num" property="orderNum"/>
+        </collection>
+
+        <collection property="actionList" javaType="list" resultMap="org.xunqi.mapper.ActionMapper.ActionResultMap"/>
+    </resultMap>
+
+
+    <insert id="insert">
+        insert into sys_group (name)
+        select #{name} from dual
+        where not exists(select 1 from sys_group where name=#{name})
+    </insert>
+
+
+    <update id="update">
+        UPDATE sys_group
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name}
+            </if>
+        </set>
+        WHERE
+        id = #{id} and not exists(select 1 from(select 1 from sys_group where name=#{name} and id != #{id})a)
+    </update>
+
+
+    <delete id="delete">
+        DELETE
+        FROM
+            sys_group
+        WHERE
+            id = #{id}
+    </delete>
+
+
+    <select id="select" resultType="org.xunqi.pojo.Group">
+        SELECT
+        id,
+        NAME
+        FROM
+        sys_group t
+        <where>
+            <if test="name != null">
+                and t.name = #{name}
+            </if>
+        </where>
+        ORDER BY
+        CONVERT ( NAME USING gbk ) COLLATE gbk_chinese_ci
+    </select>
+
+
+    <select id="selectById" resultType="org.xunqi.pojo.Group">
+        SELECT
+            id,
+            NAME
+        FROM
+            sys_group
+        WHERE
+            id = #{id}
+    </select>
+
+    
+    <select id="selectMenuListById" resultMap="GroupResultMap">
+        SELECT
+            g.id,
+            g.NAME,
+            m.id menu_id,
+            m.NAME menu_name,
+            m.url,
+            m.parent_id,
+            m.order_num,
+            a.NAME action_name,
+            a.id action_id,
+            a.url action_url,
+            a.menu_id action_menu_id,
+            a.method
+        FROM
+            sys_group g
+                LEFT JOIN sys_group_menu gm ON g.id = gm.group_id
+                LEFT JOIN sys_menu m ON gm.menu_id = m.id
+                LEFT JOIN sys_group_action ga ON g.id = ga.group_id
+                LEFT JOIN sys_action a ON ga.action_id = a.id
+        WHERE
+            g.id = #{id}
+        ORDER BY
+            m.order_num
+    </select>
+
+
+</mapper>
