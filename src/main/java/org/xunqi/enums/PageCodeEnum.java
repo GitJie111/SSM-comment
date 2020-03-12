@@ -16,6 +16,7 @@ public enum PageCodeEnum {
     REMOVE_SUCCESS(1200,"删除成功!"),
     REMOVE_FAIL(1201,"删除失败!"),
     LOGIN_FAIL(1301,"登录失败!用户名密码错误!"),
+    SESSION_TIMEOUT(1302,"session超时，请重新登陆！"),
         ;
 
     /** 状态码 */

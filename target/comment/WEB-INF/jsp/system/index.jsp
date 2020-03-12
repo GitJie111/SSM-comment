@@ -1,3 +1,5 @@
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
@@ -12,7 +14,7 @@
 	    <script src="${basePath}/js/common/json.js" type="text/javascript"></script>
 	    <script src="${basePath}/js/system/index.js" type="text/javascript"></script>
 	</head>
-	<body>
+	<body>姓名
 		<!-- 蒙版DIV -->
 		<div id="mengban" style="display:none"></div>
 		<input type="hidden" id="basePath" value="${basePath}"/>
@@ -64,7 +66,13 @@
 		                <div class="wuxianlogo"><img src="" alt="" height="28px" width="275px"/></div>
 		                <div class="h_info">
 		                    <span class="line"></span>
-							欢迎您！姓名[账号]&nbsp; 当前时间：2017年03月20日&nbsp;&nbsp;&nbsp;&nbsp;
+							欢迎您！姓名[${USER_INFO.name}]&nbsp;
+							<%
+								Date currentTime = new Date();
+								SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+								String dateString = formatter.format(currentTime);
+							%>
+							当前时间：<% out.println(dateString); %>&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <a href="javascript:void(0);" onclick="openAddDiv();">[修改密码]</a>
 		                    &nbsp;
 		                    <a href="javascript:void(0);" onclick="if(confirm('您确认退出系统?')){$('#mainForm').submit();};">[退出系统]</a>
