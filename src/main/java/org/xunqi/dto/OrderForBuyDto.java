@@ -35,6 +35,6 @@ public class OrderForBuyDto {
     /**
      *  会员手机号
      */
-    private Long phone;
+    private Long username;
 
 }

@@ -34,10 +34,9 @@
 								</td>
 	                            <td style="text-align: right;" width="150">
 	                            	<input class="tabSub" value="查询" onclick="search('1');" type="button"/>&nbsp;&nbsp;&nbsp;&nbsp;
-	                            	<%--<t:auth url="/ad/addInit">
+	                            	<t:auth url="/ad/addInit">
 	                            		<input class="tabSub" value="添加" onclick="location.href='${basePath}/ad/addInit'" type="button"/>
-	                            	</t:auth>--%>
-									<input class="tabSub" value="添加" onclick="location.href='${basePath}/ad/addInit'" type="button"/>
+	                            	</t:auth>
 	                            </td>
 	       					</tr>
 						</tbody>
@@ -57,14 +56,12 @@
 										<td>${item.title}</td>
 										<td>${item.link}</td>
 										<td>
-											<a href="javascript:void(0);" onclick="modifyInit('${item.id}')">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;
-<%--											<t:auth url="/ad/modifyInit">--%>
-<%--												<a href="javascript:void(0);" onclick="modifyInit('${item.id}')">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;--%>
-<%--											</t:auth>--%>
-<%--											<t:auth url="/ad/remove">--%>
-<%--												<a href="javascript:void(0);" onclick="remove('${item.id}')">删除</a>--%>
-<%--											</t:auth>--%>
-											<a href="javascript:void(0);" onclick="remove('${item.id}')">删除</a>
+											<t:auth url="/ad/modifyInit">
+												<a href="javascript:void(0);" onclick="modifyInit('${item.id}')">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;
+											</t:auth>
+											<t:auth url="/ad/remove">
+												<a href="javascript:void(0);" onclick="remove('${item.id}')">删除</a>
+											</t:auth>
 										</td>
 									</tr>
 								</c:forEach>

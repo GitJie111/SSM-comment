@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.xunqi.constant.SessionKeyConst;
+import org.xunqi.dto.GroupDto;
 import org.xunqi.dto.UserDto;
 import org.xunqi.enums.PageCodeEnum;
 import org.xunqi.pojo.User;
+import org.xunqi.service.GroupService;
 import org.xunqi.service.UserService;
 
 import javax.annotation.Resource;
@@ -26,6 +28,9 @@ public class LoginController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private GroupService groupService;
 
     @Autowired
     private HttpSession session;
@@ -54,7 +59,10 @@ public class LoginController {
     @RequestMapping("/validate")
     public String validate(UserDto userDto, RedirectAttributes attr) {
         if (userService.login(userDto)) {
+            GroupDto groupDto = groupService.getByIdWithMenuAction(userDto.getGroupId());
             session.setAttribute(SessionKeyConst.USER_INFO,userDto);
+            session.setAttribute(SessionKeyConst.MENU_INFO,groupDto.getMenuDtoList());
+            session.setAttribute(SessionKeyConst.ACTION_INFO,groupDto.getActionDtoList());
             return "redirect:/index";
         }
         attr.addFlashAttribute(PageCodeEnum.KEY,PageCodeEnum.LOGIN_FAIL);

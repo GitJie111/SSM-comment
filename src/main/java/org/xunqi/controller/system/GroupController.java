@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.xunqi.dto.GroupDto;
 import org.xunqi.dto.PageCodeDto;
 import org.xunqi.enums.PageCodeEnum;
@@ -27,6 +28,7 @@ public class GroupController {
      * 获取用户组列表
      */
     @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
     public List<GroupDto> getList() {
         List<GroupDto> groupDtoList = groupService.getList();
         return groupDtoList;
@@ -62,7 +64,7 @@ public class GroupController {
     /**
      * 修改用户组
      */
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(value="/{id}",method = RequestMethod.PUT)
     public PageCodeDto update(GroupDto groupDto) {
         PageCodeDto result;
 
@@ -86,6 +88,31 @@ public class GroupController {
             result = new PageCodeDto(PageCodeEnum.REMOVE_SUCCESS);
         } else {
             result = new PageCodeDto(PageCodeEnum.REMOVE_FAIL);
+        }
+        return result;
+    }
+
+
+    /**
+     * 获取用户组对应可以访问的菜单和动作
+     */
+    @RequestMapping(value="/{id}/menus",method = RequestMethod.GET)
+    public GroupDto getMenuList(@PathVariable("id") Long id) {
+        return groupService.getByIdWithMenuAction(id);
+    }
+
+
+    /**
+     * 为用户组分配可以访问的菜单
+     */
+    @RequestMapping(value = "/{id}/menus",method = RequestMethod.POST)
+    public PageCodeDto assignMenu(GroupDto groupDto) {
+        PageCodeDto result;
+
+        if (groupService.assignMenu(groupDto)) {
+            result = new PageCodeDto(PageCodeEnum.ASSIGN_SUCCESS);
+        } else {
+            result = new PageCodeDto(PageCodeEnum.ASSIGN_FAIL);
         }
         return result;
     }

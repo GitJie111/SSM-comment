@@ -5,34 +5,34 @@ $(function() {
 	initGroupTree();
 	// 初始化菜单树 
 	initMenuTree();
-	
+
 	$("#userForm").validate({
 		rules : {
 			"userName" : "required",
 			"chName" : "required"
 		}
 	});
-	
+
 	$("#groupForm").validate({
 		rules : {
 			"groupName" : "required"
 		}
 	});
-	
+
 	$("#menuForm").validate({
 		rules : {
 			"menuName" : "required"
 		}
 	});
-	
-	
+
+
 	$("#actionForm").validate({
 		rules : {
 			"actionName" : "required",
 			"actionUrl" : "required"
 		}
 	});
-	
+
 });
 
 /**
@@ -41,7 +41,7 @@ $(function() {
 function move(element) {
 	$(".rMenuLiMove").addClass("rMenuLi");
 	$(".rMenuLiMove").removeClass("rMenuLiMove");
-	
+
 	$(element).addClass("rMenuLiMove");
 	$(element).removeClass("rMenuLi");
 }
@@ -74,7 +74,7 @@ function mousedown() {
  */
 function divOut() {
 	$("body").bind("mousedown", mousedown);
-	
+
 	$(".rMenuLiMove").addClass("rMenuLi");
 	$(".rMenuLiMove").removeClass("rMenuLiMove");
 }
@@ -168,10 +168,10 @@ function userRightClick(event, treeId, treeNode) {
 	if(!treeNode) {
 		return;
 	}
-	
+
 	$.fn.zTree.getZTreeObj(treeId).selectNode(treeNode);
 	rightClick(event,"rMenu");
-	
+
 	if(treeNode.id === 0) {
 		$(".disabled").hide();
 	} else {
@@ -191,7 +191,7 @@ function selectUser() {
 	if (checkedNodes.length > 0) {
 		groupTree.checkNode(checkedNodes[0], false);
 	}
-	
+
 	common.ajax({
 		url : $("#basePath").val() + "/users/" + nodes[0].id,
 		success : function(data) {
@@ -557,17 +557,17 @@ function menuRightClick(event, treeId, treeNode) {
 	if(!treeNode) {
 		return;
 	}
-	
+
 	rightClick(event,"menuMenu");
 	$.fn.zTree.getZTreeObj(treeId).selectNode(treeNode);
-	
+
 
 	$(".rMenuLi").show();
 	// 如果是动作节点，不显示【新增菜单】、【新增动作】
 	if(treeNode.comboId.indexOf(common.menuPrefix.PREFIX_ACTION) == 0) {
 		$(".menuClass").hide();
 	}
-	
+
 	// 如果是根节点，不显示【修改】、【删除】
 	if(treeNode.comboId === common.menuPrefix.PREFIX_MENU + "0") {
 		$(".disabled").hide();
@@ -882,13 +882,13 @@ function selectGroup() {
 			success : function(data) {
 				var menuTree = $.fn.zTree.getZTreeObj("menu");
 				menuTree.checkAllNodes(false);
-				
+
 				// 将菜单树上,用户组对应的菜单节点勾选上
 				for (var i = 0; i < data.menuDtoList.length; i++) {
 					// 因为菜单树是一颗混合树,需要用组合ID(带前缀的ID)来选中对应的节点
 					menuTree.checkNode(menuTree.getNodeByParam("comboId", common.menuPrefix.PREFIX_MENU + data.menuDtoList[i].id), true);
 				}
-				
+
 				// 将菜单树上,用户组对应的动作节点勾选上
 				for (var i = 0; i < data.actionDtoList.length; i++) {
 					// 因为菜单树是一颗混合树,需要用组合ID(带前缀的ID)来选中对应的节点

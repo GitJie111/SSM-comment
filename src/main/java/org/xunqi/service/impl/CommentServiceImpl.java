@@ -86,11 +86,30 @@ public class CommentServiceImpl implements CommentService {
             BeanUtils.copyProperties(commentTemp,commentDto);
             //隐藏手机号中间4位
             StringBuffer phoneBuffer = new StringBuffer(String.valueOf(commentTemp.getOrders().getMember().getPhone()));
-            commentDto.setPhone(phoneBuffer.replace(3,7,"***").toString());
+            commentDto.setUsername(phoneBuffer.replace(3,7,"***").toString());
         }
 
         commentListDto.setHasMore(page.getCurrentPage() < page.getTotalPage());
 
         return commentListDto;
+    }
+
+    @Override
+    public List<CommentDto> selectByCommentPage(CommentDto commentDto) {
+
+        List<CommentDto> commentDtoList = new ArrayList<>();
+
+        Comment result = new Comment();
+        BeanUtils.copyProperties(commentDto,result);
+
+        List<Comment> commentList = commentMapper.selectByCommentPage(result);
+
+        for (Comment comment : commentList) {
+            CommentDto commentDtoTemp = new CommentDto();
+            commentDtoList.add(commentDtoTemp);
+            BeanUtils.copyProperties(comment,commentDtoTemp);
+        }
+
+        return commentDtoList;
     }
 }

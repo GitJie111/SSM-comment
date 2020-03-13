@@ -19,7 +19,7 @@ import javax.annotation.Resource;
  */
 @Controller
 @RequestMapping(value = "/actions")
-public class ActionController {
+public class ActionsController {
 
     @Resource
     private ActionService actionService;

@@ -7,6 +7,7 @@
     <resultMap type="Comment" id="CommentResultMap">
         <id column="id" property="id" />
         <result column="comment" property="comment" />
+        <result column="orders_id" property="ordersId"/>
         <result column="star" property="star" />
         <result column="create_time" property="createTime" />
         <association property="orders" resultMap="org.xunqi.mapper.OrdersMapper.OrdersResultMap"/>
@@ -28,5 +29,28 @@
         insert into comment (orders_id, comment, star, create_time)
         values (#{ordersId},#{comment},#{star},#{createTime})
     </insert>
+
+    <select id="selectByCommentPage" resultMap="CommentResultMap">
+        SELECT
+            c.id,
+            c.orders_id,
+            c.create_time,
+            c.COMMENT,
+            c.star,
+            m.phone
+        FROM
+            COMMENT c,
+            orders o,
+            business b,
+            member m
+        WHERE
+            c.orders_id = o.id
+          AND o.business_id = b.id
+        <if test="comment != null">
+            AND comment = #{comment}
+        </if>
+        ORDER BY
+            create_time DESC
+    </select>
 
 </mapper>

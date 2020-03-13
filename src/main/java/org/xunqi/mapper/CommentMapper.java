@@ -24,4 +24,12 @@ public interface CommentMapper {
      */
     int insert(Comment comment);
 
+
+    /**
+     * 根据评论内容进行模糊分页查询
+     * @param comment
+     * @return
+     */
+    List<Comment> selectByCommentPage(Comment comment);
+
 }

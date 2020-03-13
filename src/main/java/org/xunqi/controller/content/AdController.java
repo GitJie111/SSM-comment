@@ -27,7 +27,7 @@ public class AdController {
      * 广告管理页初始化(点广告管理菜单进入的第一个页面)
      */
     @RequestMapping
-    public String init(Model model, HttpServletRequest request) {
+    public String init(Model model) {
         AdDto adDto = new AdDto();
         List<AdDto> list = adService.searchByPage(adDto);
         model.addAttribute("list", list);

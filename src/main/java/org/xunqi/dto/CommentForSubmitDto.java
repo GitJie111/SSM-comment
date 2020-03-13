@@ -33,6 +33,6 @@ public class CommentForSubmitDto {
     /**
      *  会员手机号
      */
-    private String phone;
+    private String username;
 
 }

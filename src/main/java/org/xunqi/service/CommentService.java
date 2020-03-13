@@ -1,8 +1,12 @@
 package org.xunqi.service;
 
 import org.xunqi.bean.Page;
+import org.xunqi.dto.CommentDto;
 import org.xunqi.dto.CommentForSubmitDto;
 import org.xunqi.dto.CommentListDto;
+import org.xunqi.pojo.Comment;
+
+import java.util.List;
 
 /**
  * @author Jerry
@@ -24,5 +28,13 @@ public interface CommentService {
      * @return
      */
     CommentListDto getListByBusinessId(Long businessId, Page page);
+
+
+    /**
+     * 根据评论内容进行模糊分页查询
+     * @param commentDto
+     * @return
+     */
+    List<CommentDto> selectByCommentPage(CommentDto commentDto);
 
 }

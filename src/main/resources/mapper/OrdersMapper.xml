@@ -14,7 +14,7 @@
             <result column="number" property="number"/>
         </association>
         <association property="member" javaType="Member">
-            <result column="phone" property="phone"/>
+            <result column="username" property="phone"/>
         </association>
     </resultMap>
 

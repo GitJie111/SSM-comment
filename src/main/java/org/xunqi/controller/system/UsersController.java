@@ -1,9 +1,11 @@
 package org.xunqi.controller.system;
+import	java.security.Policy;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.xunqi.dto.PageCodeDto;
 import org.xunqi.dto.UserDto;
 import org.xunqi.enums.PageCodeEnum;
@@ -27,6 +29,7 @@ public class UsersController {
      * 获取用户列表
      */
     @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
     public List<UserDto> getList() {
         return userService.getList();
     }
@@ -61,7 +64,7 @@ public class UsersController {
     /**
      * 修改用户
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value="/{id}",method = RequestMethod.PUT)
     public PageCodeDto update(UserDto userDto) {
         PageCodeDto result;
         if (userService.modify(userDto)) {

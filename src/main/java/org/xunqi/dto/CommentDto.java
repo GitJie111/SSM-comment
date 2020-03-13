@@ -14,7 +14,7 @@ public class CommentDto extends Comment {
     /**
      *  隐藏中间4位手机号
      */
-    private String phone;
+    private String username;
 
 
 }

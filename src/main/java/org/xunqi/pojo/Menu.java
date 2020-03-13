@@ -3,6 +3,8 @@ package org.xunqi.pojo;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * @author Jerry
  */
@@ -15,5 +17,7 @@ public class Menu {
     private String url;
     private Long parentId;
     private Integer orderNum;
+
+    private List<Action> actionList;
 
 }

@@ -2,9 +2,13 @@ package org.xunqi.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.xunqi.dto.ActionDto;
 import org.xunqi.dto.GroupDto;
+import org.xunqi.dto.MenuDto;
 import org.xunqi.mapper.GroupMapper;
+import org.xunqi.pojo.Action;
 import org.xunqi.pojo.Group;
+import org.xunqi.pojo.Menu;
 import org.xunqi.service.GroupService;
 
 import javax.annotation.Resource;
@@ -74,7 +78,33 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public GroupDto getByIdWithMenuAction(Long id) {
-        return null;
+
+        GroupDto result = new GroupDto();
+        List<MenuDto> menuDtoList = new ArrayList<>();
+        List<ActionDto> actionDtoList = new ArrayList<>();
+        result.setMenuDtoList(menuDtoList);
+        result.setActionDtoList(actionDtoList);
+
+        Group group = groupMapper.selectMenuListById(id);
+
+        //判断查询出来的数据是否为空
+        if (group != null) {
+            BeanUtils.copyProperties(group,result);
+
+            for (Menu menu : group.getMenuList()) {
+                MenuDto menuDto = new MenuDto();
+                menuDtoList.add(menuDto);
+                BeanUtils.copyProperties(menu,menuDto);
+            }
+
+            for (Action action : group.getActionList()) {
+                ActionDto actionDto = new ActionDto();
+                actionDtoList.add(actionDto);
+                BeanUtils.copyProperties(action,actionDto);
+            }
+        }
+
+        return result;
     }
 
     @Override

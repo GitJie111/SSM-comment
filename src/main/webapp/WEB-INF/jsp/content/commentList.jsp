@@ -4,14 +4,15 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8081/comment/css/all.css">
-		<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8081/comment/css/pop.css">
-		<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8081/comment/css/main.css">
-		<script type="text/javascript" src="http://127.0.0.1:8081/comment/js/common/jquery-1.8.3.js"></script>
-		<script type="text/javascript" src="http://127.0.0.1:8081/comment/js/content/adList.js"></script>
+	<script type="text/javascript" src="${basePath}/js/common/jquery-1.8.3.js"></script>
+	<link rel="stylesheet" type="text/css" href="${basePath}/css/all.css"/>
+	<link rel="stylesheet" type="text/css" href="${basePath}/css/pop.css"/>
+	<link rel="stylesheet" type="text/css" href="${basePath}/css/main.css"/>
+	<script type="text/javascript" src="${basePath}/js/common/common.js"></script>
+	<script type="text/javascript" src="${basePath}/js/content/adList.js"></script>
 	</head>
 	<body style="background: #e1e9eb;">
-		<form action="http://127.0.0.1:8081/comment/ad/search" id="mainForm" method="post">
+		<form action="${basePath}/comments" id="mainForm" method="post">
 			<input id="id" name="id" type="hidden">
 			<input id="basePath" value="http://127.0.0.1:8081/comment" type="hidden">
 			<input name="page.currentPage" id="currentPage" value="1" type="hidden">
@@ -38,46 +39,28 @@
 								<tr>
 								    <th>序号</th>
 								    <th>订单号</th>
+									<th>评论内容</th>
 								    <th>评论星级</th>
 								    <th>手机号</th>
 								</tr>
-								
+
+								<c:forEach items="${list}" var="item" varStatus="s">
 									<tr>
-										<td>1</td>
-										<td>123</td>
-										<td>5</td>
-										<td>13912345678</td>
+										<td>${s.index + 1}</td>
+										<td>${item.ordersId}</td>
+										<td>${item.comment}</td>
+										<td>${item.star}</td>
+										<%--<td>${item.phone}</td>--%>
 									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 						
 						<!-- 分页 -->
-						
-
-
-
-<script type="text/javascript">
-	function transCurrentPage(currentPage) {
-		var rule = /^[0-9]*[1-9][0-9]*$/;
-		if(!rule.test(currentPage)) {
-			currentPage = 1;
-		}
-		eval("search(currentPage)");
-	}
-</script>
-
-<div class="page fix">
-	<a href="javascript:transCurrentPage('1');" class="first">首页</a>
-	<a href="javascript:transCurrentPage('0');" class="pre">上一页</a>
-	当前第<span>1/1</span>页
-	<a href="javascript:transCurrentPage('2');" class="next">下一页</a>
-	<a href="javascript:transCurrentPage('1');" class="last">末页</a>
-	跳至 &nbsp;<input id="currentPageText" value="1" class="allInput w28" type="text">&nbsp;页 &nbsp;
-	<a href="javascript:transCurrentPage($('#currentPageText').val());" class="go">GO</a>
-</div>
+						<t:page jsMethodName="search" page="${searchParam.page}"></t:page>
 					</div>
 				</div>
 			</div>
 		</form>
-	
-</body></html>
+	</body>
+</html>
