@@ -1,14 +1,19 @@
 package org.xunqi.dto;
 
-import lombok.Data;
 import org.xunqi.pojo.User;
 
 /**
  * @author Jerry
  */
-@Data
 public class UserDto extends User {
 
     private Integer pId;
 
+    public Integer getpId() {
+        return pId;
+    }
+
+    public void setpId(Integer pId) {
+        this.pId = pId;
+    }
 }

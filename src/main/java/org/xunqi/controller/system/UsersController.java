@@ -2,10 +2,7 @@ package org.xunqi.controller.system;
 import	java.security.Policy;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.xunqi.dto.PageCodeDto;
 import org.xunqi.dto.UserDto;
 import org.xunqi.enums.PageCodeEnum;
@@ -18,7 +15,7 @@ import java.util.List;
  * 用户相关
  * @author Jerry
  */
-@Controller
+@RestController
 @RequestMapping(value = "/users")
 public class UsersController {
 
@@ -29,7 +26,6 @@ public class UsersController {
      * 获取用户列表
      */
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
     public List<UserDto> getList() {
         return userService.getList();
     }
@@ -54,7 +50,7 @@ public class UsersController {
     /**
      * 根据用户id获取用户信息
      */
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    @RequestMapping(value="/{id}",method = RequestMethod.GET)
     public UserDto getById(@PathVariable("id") Long id) {
         UserDto userDto = userService.getById(id);
         return userDto;
@@ -79,7 +75,7 @@ public class UsersController {
     /**
      * 删除用户
      */
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
     public PageCodeDto delete(@PathVariable("id") Long id) {
         PageCodeDto result;
         if (userService.remove(id)) {

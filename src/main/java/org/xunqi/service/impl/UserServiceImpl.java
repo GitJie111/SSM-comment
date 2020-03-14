@@ -56,16 +56,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getList() {
-        List<UserDto> list = new ArrayList<>();
-        //查询全部数据
+        List<UserDto> result = new ArrayList<>();
         List<User> userList = userMapper.select(new User());
         for (User user : userList) {
             UserDto userDto = new UserDto();
-            BeanUtils.copyProperties(user,userDto);
-            userDto.setPId(0);
-            list.add(userDto);
+            result.add(userDto);
+            BeanUtils.copyProperties(user, userDto);
+            userDto.setpId(0);
         }
-        return list;
+        return result;
     }
 
     @Override

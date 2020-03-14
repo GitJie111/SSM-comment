@@ -48,19 +48,14 @@
     </delete>
 
 
-    <select id="select" resultType="org.xunqi.pojo.Group">
-        SELECT
-        id,
-        NAME
-        FROM
-        sys_group t
+    <select id="select" resultType="Group">
+        select id,name from sys_group t
         <where>
             <if test="name != null">
                 and t.name = #{name}
             </if>
         </where>
-        ORDER BY
-        CONVERT ( NAME USING gbk ) COLLATE gbk_chinese_ci
+        order by convert(name using gbk) collate gbk_chinese_ci
     </select>
 
 

@@ -2,13 +2,14 @@ package org.xunqi.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.xunqi.dto.ActionDto;
 import org.xunqi.dto.GroupDto;
 import org.xunqi.dto.MenuDto;
+import org.xunqi.mapper.GroupActionMapper;
 import org.xunqi.mapper.GroupMapper;
-import org.xunqi.pojo.Action;
-import org.xunqi.pojo.Group;
-import org.xunqi.pojo.Menu;
+import org.xunqi.mapper.GroupMenuMapper;
+import org.xunqi.pojo.*;
 import org.xunqi.service.GroupService;
 
 import javax.annotation.Resource;
@@ -24,18 +25,21 @@ public class GroupServiceImpl implements GroupService {
     @Resource
     private GroupMapper groupMapper;
 
+    @Resource
+    private GroupActionMapper groupActionMapper;
+
+    @Resource
+    private GroupMenuMapper groupMenuMapper;
+
     @Override
     public List<GroupDto> getList() {
         List<GroupDto> result = new ArrayList<>();
-
-        //查询全部信息
         List<Group> groupList = groupMapper.select(new Group());
-
         for (Group group : groupList) {
             GroupDto groupDto = new GroupDto();
-            BeanUtils.copyProperties(group,groupDto);
-            groupDto.setPId(0);
             result.add(groupDto);
+            BeanUtils.copyProperties(group, groupDto);
+            groupDto.setpId(0);
         }
         return result;
     }
@@ -108,7 +112,47 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    @Transactional
     public boolean assignMenu(GroupDto groupDto) {
-        return false;
+
+        //先删除用户组与菜单之间的关系
+        groupMenuMapper.deleteByGroupId(groupDto.getId());
+        //删除用户组与动作之间的关系
+        groupActionMapper.deleteByGroupId(groupDto.getId());
+
+        //保存为用户组分配的菜单
+        if (groupDto.getMenuIdList() != null && groupDto.getMenuIdList().size() > 0) {
+            List<GroupMenu> groupMenuList = new ArrayList<>();
+
+            for (Long menuId : groupDto.getMenuIdList()) {
+                if (menuId != null) {
+                    GroupMenu groupMenu = new GroupMenu();
+                    groupMenu.setGroupId(groupDto.getId());
+                    groupMenu.setMenuId(menuId);
+                    groupMenuList.add(groupMenu);
+                }
+            }
+            //批量新增
+            groupMenuMapper.insertBatch(groupMenuList);
+        }
+
+
+        //保存为用户组分配的动作
+        if (groupDto.getActionIdList() != null && groupDto.getActionIdList().size() > 0) {
+            List<GroupAction> groupActionList = new ArrayList<>();
+
+            for (Long actionId : groupDto.getActionIdList()) {
+                if (actionId != null) {
+                    GroupAction groupAction = new GroupAction();
+                    groupAction.setActionId(actionId);
+                    groupAction.setGroupId(groupDto.getId());
+                    groupActionList.add(groupAction);
+                }
+            }
+            //批量新增
+            groupActionMapper.insertBatch(groupActionList);
+        }
+
+        return true;
     }
 }

@@ -31,22 +31,20 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<MenuForZtreeDto> getZtreeList() {
-        List<MenuForZtreeDto> result = new ArrayList<>();
 
-        //查询全部数据
+        List<MenuForZtreeDto> result = new ArrayList<>();
         List<Menu> menuList = menuMapper.selectWithAction(new Menu());
 
-        //循环读取数据
-        for (Menu menu : menuList) {
+        for(Menu menu : menuList) {
             MenuForZtreeDto menuForZtreeDto = new MenuForZtreeDto();
             result.add(menuForZtreeDto);
-            BeanUtils.copyProperties(menu,menuForZtreeDto);
+            BeanUtils.copyProperties(menu, menuForZtreeDto);
             menuForZtreeDto.setOpen(true);
             menuForZtreeDto.setComboId(MenuForZtreeDto.PREFIX_MENU + menu.getId());
             menuForZtreeDto.setComboParentId(MenuForZtreeDto.PREFIX_MENU + menu.getParentId());
 
-            //组装菜单下对应的动作
-            for (Action action : menu.getActionList()) {
+            // 组装菜单下对应的动作
+            for(Action action : menu.getActionList()) {
                 menuForZtreeDto = new MenuForZtreeDto();
                 result.add(menuForZtreeDto);
                 menuForZtreeDto.setComboId(MenuForZtreeDto.PREFIX_ACTION + action.getId());
@@ -56,7 +54,6 @@ public class MenuServiceImpl implements MenuService {
                 menuForZtreeDto.setParentId(action.getMenuId());
             }
         }
-
         return result;
     }
 
@@ -110,6 +107,9 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public boolean sort(MenuForMoveDto menuForMoveDto) {
+
+        //如果移动到目标节点，成为目标节点的子节点
+
         return false;
     }
 }

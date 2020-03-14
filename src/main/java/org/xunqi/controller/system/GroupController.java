@@ -1,10 +1,7 @@
 package org.xunqi.controller.system;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.xunqi.dto.GroupDto;
 import org.xunqi.dto.PageCodeDto;
 import org.xunqi.enums.PageCodeEnum;
@@ -17,7 +14,7 @@ import java.util.List;
  * 用户组相关
  * @author Jerry
  */
-@Controller
+@RestController
 @RequestMapping(value = "/groups")
 public class GroupController {
 
@@ -28,10 +25,8 @@ public class GroupController {
      * 获取用户组列表
      */
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
     public List<GroupDto> getList() {
-        List<GroupDto> groupDtoList = groupService.getList();
-        return groupDtoList;
+        return groupService.getList();
     }
 
 
@@ -54,7 +49,7 @@ public class GroupController {
     /**
      * 根据用户主键id获取用户组信息
      */
-    @RequestMapping(value = "{/id}",method = RequestMethod.GET)
+    @RequestMapping(value="/{id}",method = RequestMethod.GET)
     public GroupDto getById(@PathVariable("id") Long id) {
         GroupDto groupDto = groupService.getById(id);
         return groupDto;

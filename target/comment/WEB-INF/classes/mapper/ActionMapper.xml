@@ -5,10 +5,10 @@
 <mapper namespace="org.xunqi.mapper.ActionMapper">
 
     <resultMap type="Action" id="ActionResultMap">
-        <id column="id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="url" property="url"/>
-        <result column="menu_id" property="menuId"/>
+        <id column="action_id" property="id"/>
+        <result column="action_name" property="name"/>
+        <result column="action_url" property="url"/>
+        <result column="action_menu_id" property="menuId"/>
         <result column="method" property="method"/>
     </resultMap>
 

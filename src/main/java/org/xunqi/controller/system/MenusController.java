@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.xunqi.dto.MenuDto;
 import org.xunqi.dto.MenuForMoveDto;
 import org.xunqi.dto.MenuForZtreeDto;
@@ -21,7 +21,7 @@ import java.util.List;
  * @author: 夏沫止水
  * @create: 2020-03-13 16:06
  **/
-@Controller
+@RestController
 @RequestMapping(value = "/menus")
 public class MenusController {
 
@@ -33,7 +33,6 @@ public class MenusController {
      * 获取菜单列表
      */
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
     public List<MenuForZtreeDto> getList() {
         return menuService.getZtreeList();
     }

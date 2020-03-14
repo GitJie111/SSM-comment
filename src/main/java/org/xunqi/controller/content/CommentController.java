@@ -28,5 +28,13 @@ public class CommentController {
         return "/content/commentList";
     }
 
+    @RequestMapping("/search")
+    public String search(CommentDto commentDto, Model model) {
+        List<CommentDto> commentDtoList = commentService.selectByCommentPage(commentDto);
+        model.addAttribute("list",commentDtoList);
+        model.addAttribute("searchParam",commentDto);
+        return "/content/commentList";
+    }
+
 
 }
