@@ -25,7 +25,7 @@ public class OrderForBuyDto {
     /**
      *  消费人数
      */
-    private Integer num;
+    private Integer num = 1;
 
     /**
      *  消费金额

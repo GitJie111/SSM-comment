@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.xunqi.mapper.ReportMapper">
+
+
+    <select id="countOrder" resultType="java.util.Map">
+        SELECT
+            d.NAME categoryName,
+            date_format( o.create_time, '%H' ) `hour`,
+            cast( count( 1 ) AS CHAR ) `count`
+        FROM
+            business b,
+            orders o,
+            dic d
+        WHERE
+            b.id = o.business_id
+          AND b.category = d.CODE
+          AND date_format( o.create_time, '%Y%m%d' ) = date_format( date_sub( now( ), INTERVAL 1 DAY ), '%Y%m%d' )
+        GROUP BY
+            d.NAME,
+            date_format( o.create_time, '%H' )
+    </select>
+</mapper>

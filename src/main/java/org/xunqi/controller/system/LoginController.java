@@ -52,6 +52,16 @@ public class LoginController {
         return "/system/index";
     }
 
+    /**
+     * 没有权限访问
+     */
+    @RequestMapping(value = "/noAuth")
+    public String noAuth(Model model) {
+        model.addAttribute(PageCodeEnum.KEY,PageCodeEnum.NO_AUTH);
+        session.invalidate();
+        return "/system/error";
+    }
+
 
     /**
      * 验证用户名/密码是否正确 验证通过跳转至后台管理首页，验证失败，返回至登录页。

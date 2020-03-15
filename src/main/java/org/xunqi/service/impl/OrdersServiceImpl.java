@@ -29,6 +29,7 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public boolean add(OrdersDto ordersDto) {
         Orders orders = new Orders();
+        ordersDto.getMemberId();
         BeanUtils.copyProperties(ordersDto,orders);
         orders.setCommentState(CommentStateConst.NOT_COMMENT);
         int result = ordersMapper.insert(orders);

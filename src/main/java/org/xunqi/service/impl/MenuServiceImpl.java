@@ -2,6 +2,7 @@ package org.xunqi.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.xunqi.dto.MenuDto;
 import org.xunqi.dto.MenuForMoveDto;
 import org.xunqi.dto.MenuForZtreeDto;
@@ -30,6 +31,7 @@ public class MenuServiceImpl implements MenuService {
     private ActionMapper actionMapper;
 
     @Override
+    @Transactional
     public List<MenuForZtreeDto> getZtreeList() {
 
         List<MenuForZtreeDto> result = new ArrayList<>();
@@ -109,7 +111,51 @@ public class MenuServiceImpl implements MenuService {
     public boolean sort(MenuForMoveDto menuForMoveDto) {
 
         //如果移动到目标节点，成为目标节点的子节点
+        if (MenuForMoveDto.MOVE_TYPE_INNER.equals(menuForMoveDto.getMoveType())) {
+            //先将目标节点下所有子节点排序数字+1（让出最前面的位置）
+            menuMapper.updateOrderNumByParentId(menuForMoveDto.getTargetNodeId());
+            //将移动的节点排序数字为1，成为目标下节点下最前面的子节点
+            Menu menu = new Menu();
+            menu.setOrderNum(1);
+            menu.setId(menuForMoveDto.getDropNodeId());
+            menu.setParentId(menuForMoveDto.getTargetNodeId());
+            menuMapper.update(menu);
+        } else {
+            //获取目标节点排序数字
+            Menu menu = menuMapper.selectById(menuForMoveDto.getTargetNodeId());
+            if (menu != null) {
+                //如果移动到目标节点的前一个节点
+                if (MenuForMoveDto.MOVE_TYPE_PREV.equals(menuForMoveDto.getMoveType())) {
+                    // 将目标节点和目标节点后面的兄弟节点的排序数字加1
+                    //（留出一个空位，也就是原本目标节点的位置）
+                    menuMapper.updateOrderNumByIdInclude(menuForMoveDto.getTargetNodeId());
 
-        return false;
+                    //移动到的节点的排序数字更新为目标节点的排序数字
+                    Menu menuForUpdate = new Menu();
+                    menuForUpdate.setOrderNum(menu.getOrderNum());
+                    menuForUpdate.setId(menuForMoveDto.getDropNodeId());
+                    menuForUpdate.setParentId(menu.getParentId());
+                    menuMapper.update(menuForUpdate);
+
+                } else if (MenuForMoveDto.MOVE_TYPE_NEXT.equals(menuForMoveDto.getMoveType())){
+                    //如果移动到目标节点的后一个节点
+                    //将目标节点后面的兄弟节点的排序数字加1（留出一个空位，也就是原本目标节点后面一个节点的位置）
+                    menuMapper.updateOrderNumByParentId(menuForMoveDto.getTargetNodeId());
+                    //将移动的节点的排序数字更新为目标节点的原排序数字加1（排到目标节点的后一个节点位置）
+                    Menu menuForUpdate = new Menu();
+                    menuForUpdate.setOrderNum(menu.getOrderNum() + 1);
+                    menuForUpdate.setId(menuForMoveDto.getDropNodeId());
+                    menuForUpdate.setParentId(menu.getParentId());
+                    menuMapper.update(menuForUpdate);
+                } else {
+                    //移动方式不可识别
+                    return false;
+                }
+            } else {
+                //目标节点已不存在
+                return false;
+            }
+        }
+        return true;
     }
 }

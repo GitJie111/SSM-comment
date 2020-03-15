@@ -215,12 +215,21 @@ public class ApiController {
         if (phone != null) {
             // 2、根据手机号获取会员主键
             Long memberId = memberService.getIdByPhone(phone);
+
+            //查询商户信息
+            BusinessDto businessDto = businessService.getById(orderForBuyDto.getId());
+
             // 3、保存订单
             OrdersDto ordersDto = new OrdersDto();
             ordersDto.setNum(orderForBuyDto.getNum());
-            ordersDto.setPrice(orderForBuyDto.getPrice());
+            ordersDto.setPrice(businessDto.getPrice());
             ordersDto.setBusinessId(orderForBuyDto.getId());
             ordersDto.setMemberId(memberId);
+
+            //每消费一笔，增加已售数量
+            businessDto.setDistance(businessDto.getDistance() + 1);
+            businessService.update(businessDto);
+
             ordersService.add(ordersDto);
             dto = new ApiCodeDto(ApiCodeEnum.SUCCESS);
         } else {
