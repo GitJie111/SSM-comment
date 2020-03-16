@@ -227,7 +227,7 @@ public class ApiController {
             ordersDto.setMemberId(memberId);
 
             //每消费一笔，增加已售数量
-            businessDto.setDistance(businessDto.getDistance() + 1);
+            businessDto.setNumber(businessDto.getNumber() + 1);
             businessService.update(businessDto);
 
             ordersService.add(ordersDto);

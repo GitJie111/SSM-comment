@@ -47,20 +47,22 @@
         SELECT
             c.id,
             c.orders_id,
-            c.create_time,
-            c.COMMENT,
+            m.phone,
             c.star,
-            m.phone
+            c.COMMENT,
+            c.create_time,
+            b.title
         FROM
-            COMMENT c,
+            `comment` c,
+            member m,
             orders o,
-            business b,
-            member m
+            business b
         WHERE
-            c.orders_id = o.id
-          AND o.business_id = b.id
+            o.id = c.orders_id
+            AND o.business_id = b.id
+            AND o.member_id = m.id
         <if test="comment != null">
-            AND comment = #{comment}
+            AND c.comment like '%' #{comment} '%'
         </if>
         ORDER BY
             create_time DESC

@@ -8,6 +8,8 @@
         <id column="id" property="id" />
         <result column="comment_state" property="commentState" />
         <result column="price" property="price" />
+        <result column="num" property="num"/>
+        <result column="create_time" property="createTime"/>
         <association property="business" javaType="Business">
             <result column="img_file_name" property="imgFileName"/>
             <result column="title" property="title"/>
@@ -49,6 +51,29 @@
         <if test="memberId != null">
             and o.member_id = #{memberId}
         </if>
+    </select>
+
+
+    <select id="selectByPage" resultMap="OrdersResultMap">
+        SELECT
+            o.id,
+            m.phone,
+            b.title,
+            o.price,
+            o.num,
+            o.create_time,
+            o.comment_state
+        FROM
+            orders o
+                INNER JOIN member m ON o.member_id = m.id
+                INNER JOIN business b ON o.business_id = b.id
+        <where>
+            <if test="member != null">
+                <if test="member.phone != null">
+                    AND m.phone LIKE CONCAT('%',#{member.phone},'%')
+                </if>
+            </if>
+        </where>
     </select>
 
 

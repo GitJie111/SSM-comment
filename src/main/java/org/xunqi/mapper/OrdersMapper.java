@@ -40,4 +40,12 @@ public interface OrdersMapper {
      */
     List<Orders> select(Orders orders);
 
+
+    /**
+     * 后端分页查询显示
+     * @param orders
+     * @return
+     */
+    List<Orders> selectByPage(Orders orders);
+
 }

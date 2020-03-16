@@ -1,6 +1,7 @@
 package org.xunqi.service;
 
 import org.xunqi.dto.OrdersDto;
+import org.xunqi.pojo.Orders;
 
 import java.util.List;
 
@@ -32,4 +33,11 @@ public interface OrdersService {
      */
     List<OrdersDto> getListByMemberId(Long memberId);
 
+
+    /**
+     * 分页查询显示
+     * @param ordersDto
+     * @return
+     */
+    List<OrdersDto> selectByPage(OrdersDto ordersDto);
 }

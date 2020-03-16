@@ -3,6 +3,7 @@ package org.xunqi.service.impl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.xunqi.constant.CommentStateConst;
 import org.xunqi.dto.OrdersDto;
@@ -61,6 +62,25 @@ public class OrdersServiceImpl implements OrdersService {
             ordersDto.setTitle(orders1.getBusiness().getTitle());
             ordersDto.setCount(orders1.getBusiness().getNumber());
         }
+        return ordersDtoList;
+    }
+
+    @Override
+    public List<OrdersDto> selectByPage(OrdersDto ordersDto) {
+
+        List<OrdersDto> ordersDtoList = new ArrayList<>();
+        Orders result = new Orders();
+
+        BeanUtils.copyProperties(ordersDto,result);
+
+        List<Orders> ordersList = ordersMapper.selectByPage(result);
+
+        for (Orders orders : ordersList) {
+            OrdersDto ordersDtoTemp = new OrdersDto();
+            BeanUtils.copyProperties(orders,ordersDtoTemp);
+            ordersDtoList.add(ordersDtoTemp);
+        }
+
         return ordersDtoList;
     }
 }

@@ -20,15 +20,7 @@ public class CommentController {
     @Resource
     private CommentService commentService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String init(CommentDto commentDto, Model model) {
-        List<CommentDto> commentDtoList = commentService.selectByCommentPage(commentDto);
-        model.addAttribute("list",commentDtoList);
-        model.addAttribute("searchParam",commentDto);
-        return "/content/commentList";
-    }
-
-    @RequestMapping("/search")
+    @RequestMapping
     public String search(CommentDto commentDto, Model model) {
         List<CommentDto> commentDtoList = commentService.selectByCommentPage(commentDto);
         model.addAttribute("list",commentDtoList);

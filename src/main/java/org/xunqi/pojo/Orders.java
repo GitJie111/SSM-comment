@@ -2,6 +2,9 @@ package org.xunqi.pojo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import org.xunqi.bean.BaseBean;
+
+import java.util.Date;
 
 /**
  *  订单实体类
@@ -9,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Orders {
+public class Orders extends BaseBean {
 
     private Long id;
     private Long memberId;
@@ -19,5 +22,6 @@ public class Orders {
     private Double price;
     private Business business;
     private Member member;
+    private Date createTime;
 
 }

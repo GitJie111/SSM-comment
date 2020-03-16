@@ -34,6 +34,7 @@ public class BusinessTask {
 	 * 同步已售数量
 	 */
 	public void synNumber() {
+		businessMapper.updateNumber();
 		logger.info("已同步！");
 	}
 	

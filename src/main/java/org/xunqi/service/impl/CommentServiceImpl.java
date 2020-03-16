@@ -106,8 +106,8 @@ public class CommentServiceImpl implements CommentService {
 
         for (Comment comment : commentList) {
             CommentDto commentDtoTemp = new CommentDto();
-            commentDtoList.add(commentDtoTemp);
             BeanUtils.copyProperties(comment,commentDtoTemp);
+            commentDtoList.add(commentDtoTemp);
         }
 
         return commentDtoList;
